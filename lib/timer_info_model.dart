@@ -9,8 +9,16 @@ class TimerInfoModel extends ChangeNotifier {
   int getRemainingTime() => _remainingtime;
 
   updateRemainingTime() {
-    _remainingtime--;
-    notifyListeners();
+    // _remainingtime--;
+    // notifyListeners();
+
+    /// [Need end]
+    if(_remainingtime == -3) {
+    } else {
+      _remainingtime--;
+      notifyListeners();
+    }
   }
+
 
 }

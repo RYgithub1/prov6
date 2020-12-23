@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:prov6/timer_info_model.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -12,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int initialValue = 33;
+  // int initialValue = 33;
 
   /// [Timer with setState()]
   @override
@@ -20,9 +22,14 @@ class _HomePageState extends State<HomePage> {
     Timer.periodic(
         Duration(seconds: 1),
         (timeParameter) {
-            setState(() {
-              initialValue--;
-            });
+            // setState(() {
+            //   initialValue--;
+            // });
+
+            /// [Recept Provider and Update each seconds]
+            var timerInfo = Provider.of<TimerInfoModel>(context, listen: false);
+            timerInfo.updateRemainingTime();
+
         },
     );
     super.initState();
@@ -51,9 +58,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 12),
-            Text(
-              initialValue?.toString() ?? '',
-              style: TextStyle(fontSize: 60),
+
+            // Text(
+            //   initialValue ?.toString() ?? '',
+            //   style: TextStyle(fontSize: 60),
+            // ),
+
+            /// [Consumer]
+            Consumer<TimerInfoModel>(
+              builder: (context, model, child) {
+                return Text(
+                  model.getRemainingTime() ?.toString() ?? '',
+                  style: TextStyle(fontSize: 60),
+                );
+              },
             ),
           ],
         ),
